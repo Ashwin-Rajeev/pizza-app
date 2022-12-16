@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/golang-migrate/migrate"
+	"github.com/golang-migrate/migrate/database/postgres"
 	"github.com/spf13/viper"
 
 	_ "github.com/lib/pq"
@@ -68,12 +70,17 @@ func mustPrepareDB() *sql.DB {
 		log.Fatal(err)
 	}
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
-    m, err := migrate.NewWithDatabaseInstance(
-        "file://internal/data/migration",
-        "postgres", driver)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
-    m.Up()
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://internal/data/migration",
+		"postgres", driver)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err = m.Up(); err != nil {
+		log.Fatal(err)
+	}
 	return db
 }
