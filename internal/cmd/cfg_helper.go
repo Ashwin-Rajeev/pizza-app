@@ -67,5 +67,13 @@ func mustPrepareDB() *sql.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+    m, err := migrate.NewWithDatabaseInstance(
+        "file://internal/data/migration",
+        "postgres", driver)
+	if err != nil {
+			log.Fatal(err)
+	}
+    m.Up()
 	return db
 }

@@ -22,6 +22,7 @@ func init() {
 
 func apiServerRun(*cobra.Command, []string) {
 	db := mustPrepareDB()
+	
 	msg := sms.NewMsg()
 	app := api.NewApp(
 		data.New(db),
