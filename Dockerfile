@@ -17,6 +17,8 @@ COPY go.sum ./
 COPY main.go ./
 COPY internal internal
 
+EXPOSE 3000
+
 
 # Install server application
 RUN ["go", "install", "."]
