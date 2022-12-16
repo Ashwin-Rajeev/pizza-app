@@ -8,6 +8,8 @@ import (
 	"github.com/golang-migrate/migrate"
 	"github.com/golang-migrate/migrate/database/postgres"
 	"github.com/spf13/viper"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/mattes/migrate/source/file"
 
 	_ "github.com/lib/pq"
 )

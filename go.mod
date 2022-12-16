@@ -4,8 +4,10 @@ go 1.17
 
 require (
 	github.com/go-chi/chi/v5 v5.0.4
+	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/lib/pq v1.10.3
-	github.com/pkg/errors v0.8.1
+	github.com/mattes/migrate v3.0.1+incompatible
+	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
@@ -32,12 +34,8 @@ require (
 
 require (
 	github.com/Microsoft/go-winio v0.6.0 // indirect
-	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/docker v20.10.22+incompatible // indirect
-	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/golang-migrate/migrate v3.5.4+incompatible
-	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 )
