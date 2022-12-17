@@ -95,5 +95,6 @@ func mustPrepareDB() *sql.DB {
 	if err = m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		log.Fatal(err)
 	}
+	log.Println("database migration completed")
 	return db
 }
