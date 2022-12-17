@@ -4,7 +4,7 @@ CREATE TYPE PIZZA_SIZE AS ENUM ('medium');
 
 CREATE TYPE PIZZA_TYPE AS ENUM ('veggie', 'meat');
 
-CREATE TYPE PIZZA_COOKING_STAGE AS ENUM ('start', 'dough-prep', 'oven-bake', 'topping-art', 'done');
+CREATE TYPE  PIZZA_COOKING_STAGE AS ENUM ('start', 'dough-prep', 'oven-bake', 'topping-art', 'done');
 
 -- pizza master table
 CREATE TABLE IF NOT EXISTS pizza

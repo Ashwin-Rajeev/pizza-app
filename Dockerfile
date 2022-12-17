@@ -6,8 +6,6 @@ ENV GO111MODULE=on
 # Move to project root
 WORKDIR /go/src/api
 
-# Install rerun tool
-RUN go get -u github.com/ivpusic/rerun
 
 # Copy go mode files
 COPY go.mod ./

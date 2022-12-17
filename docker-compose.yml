@@ -15,16 +15,11 @@ services:
       - POSTGRES_PASSWORD=pass
       - POSTGRES_HOST=localhost
       - POSTGRES_PORT=5432
-    volumes:
-      - ./internal/data/migration:/docker-entrypoint-initdb.d
-      - ./.volumes:/var/lib/postgresql/data # persist data even if container shuts down
     # Main application
   api:
     build:
       context: .
-    volumes:
-      - ./:/go/src/api/
-    command: ["./wait-for-it.sh", "database:5432", "--", "rerun", "-a", "api"]
+    command: ["pizza-app","api"]
     networks:
       - api_net
     depends_on:
@@ -37,19 +32,3 @@ services:
       - POSTGRES_DB=${POSTGRES_DB_NAME}
       - POSTGRES_USER=${POSTGRES_DB_USER}
       - POSTGRES_PASSWORD=${POSTGRES_DB_PASSWORD}
-  pgweb:
-    container_name: pgweb
-    restart: always
-    image: sosedoff/pgweb
-    ports: 
-        - "8081:8081"
-    networks:
-      - api_net
-    links: 
-        - database:database
-    environment:
-        - DATABASE_URL=postgres://user:pass@database:5432/sample?sslmode=disable
-    depends_on:
-        - database
-volumes:
-  database-data: # named volumes can be managed easier using docker-compose

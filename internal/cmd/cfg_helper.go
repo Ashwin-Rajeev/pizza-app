@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
-	"github.com/golang-migrate/migrate"
-	"github.com/golang-migrate/migrate/database/postgres"
-	"github.com/spf13/viper"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/mattes/migrate/source/file"
+	"github.com/spf13/viper"
 
 	_ "github.com/lib/pq"
 )
@@ -63,10 +64,19 @@ func mustPrepareDB() *sql.DB {
 	connectionURL := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=public",
 		pgUser, pgPassword, dbHost, dbPort, dbName)
-	db, err := sql.Open("postgres", connectionURL)
+	var db *sql.DB
+	var err error
+	for i := 0; i < 5; i++ {
+		db, err = sql.Open("postgres", connectionURL)
+		if err != nil {
+			log.Println(err)
+		}
+		time.Sleep(time.Second)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
@@ -76,7 +86,7 @@ func mustPrepareDB() *sql.DB {
 		log.Fatal(err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://internal/data/migration",
+		"file:///go/src/api/internal/data/migration",
 		"postgres", driver)
 	if err != nil {
 		log.Fatal(err)
