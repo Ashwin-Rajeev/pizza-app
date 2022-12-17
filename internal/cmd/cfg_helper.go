@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -91,7 +92,7 @@ func mustPrepareDB() *sql.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err = m.Up(); err != nil {
+	if err = m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		log.Fatal(err)
 	}
 	return db
